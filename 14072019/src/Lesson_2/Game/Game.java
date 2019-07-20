@@ -55,7 +55,7 @@ public class Game {
                     if (teamTwo.get(y).getHealth() <= 0) {
                         System.out.println(teamTwo.get(y).getName() + " мертв!");
                         teamTwo.remove(teamTwo.get(y));
-                        System.out.println("Теперь игроков в команде2: " + teamTwo.size());
+                        System.out.println("Теперь игроков в команде: " + teamTwo.size());
                     }
                 }
             }
