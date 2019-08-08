@@ -27,13 +27,17 @@ public class ClientHandler {
                             String[] tokens = str.split(" ");
                             nickname = AuthService.getNickNameByLoginAndPass(tokens[1], tokens[2]);
                             if (nickname != null)  {
-                                sendMessage("/authok");
-                                server.subscribe(ClientHandler.this);
-                                System.out.println(nickname +" connected");
-                                server.broadcastMessage(nickname +" joined the conversation");
-                                break;
+                                if (!server.isNickUsed(nickname)) {
+                                    sendMessage("/authok");
+                                    server.subscribe(ClientHandler.this);
+                                    System.out.println(nickname + " connected");
+                                    server.broadcastMessage(nickname + " joined the conversation");
+                                    break;
+                                } else {
+                                    sendMessage("/inUse");
+                                }
                             } else {
-                                sendMessage("Неверный логин/пароль!");
+                                sendMessage("Incorrect login/password");
                             }
                         }
                     }

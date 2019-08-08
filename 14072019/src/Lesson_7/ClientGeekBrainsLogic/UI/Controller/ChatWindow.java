@@ -90,12 +90,17 @@ public class ChatWindow implements Initializable {
                 public void run() {
                     try {
                         while(true) {
-                            String str = in.readUTF();
-                            if (str.startsWith("/authok")) {
+                            String serverOutput = in.readUTF();
+                            if (serverOutput.startsWith("/authok")) {
                                 setAuthorized(true);
                                 messageArea.clear();
                                 break;
-                            } else {
+                            } else if (serverOutput.startsWith("/inUse")) {
+                                setAuthorized(false);
+                                messageArea.appendText("Account is already in use!");
+                            }
+
+                            else {
                                 setAuthorized(false);
                                 messageArea.appendText("Incorrect login/password!");
                             }

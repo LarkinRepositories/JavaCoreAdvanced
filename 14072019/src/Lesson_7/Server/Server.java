@@ -69,4 +69,11 @@ public class Server {
     public void unsubscribe(ClientHandler client) {
         clients.remove(client);
     }
+
+    public boolean isNickUsed(String nickname) {
+        for (ClientHandler client: clients) {
+            if (client.getNickname().equalsIgnoreCase(nickname)) return true;
+        }
+        return false;
+    }
 }

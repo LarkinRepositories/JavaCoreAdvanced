@@ -50,6 +50,7 @@ public class Login {
                                 String str = in.readUTF();
                                 if (str.startsWith("/authok")) {
                                     setAuthorized = true;
+                                    //createMainChatWindow();
                                     break;
                                 } else {
                                     authFailedText.setVisible(true);
@@ -82,7 +83,7 @@ public class Login {
             out.writeUTF("/auth "+username+" "+password);
             loginField.clear();
             passwordField.clear();
-            //createMainChatWindow();
+            createMainChatWindow();
         } catch (IOException e) {
             e.printStackTrace();
         }

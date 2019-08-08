@@ -18,7 +18,7 @@ public class Main extends Application {
 //        primaryStage.setScene(new Scene(root, 600, 400));
 //        primaryStage.setResizable(false);
 //        primaryStage.show();
-
+        ChatWindow chatWindow = new ChatWindow();
         Parent root = FXMLLoader.load(getClass().getResource("UI/Fxml/ChatWindow.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
