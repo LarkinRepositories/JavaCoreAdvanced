@@ -42,7 +42,7 @@ public class Server {
             client.sendMessage(message);
         }
     }
-    public void subsribe(ClientHandler client) {
+    public void subscribe(ClientHandler client) {
        clients.add(client);
     }
 

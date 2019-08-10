@@ -1,4 +1,4 @@
-package Lesson_6.Client;
+package Lesson_7.Client.UI.Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,14 +17,13 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class ChatWindow implements Initializable {
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
 
     private final String IP_ADDRESS = "localhost";
     private final int PORT = 8189;
-
     @FXML
     private TextArea inputMessageArea;
     @FXML
@@ -70,6 +69,7 @@ public class Controller implements Initializable {
                     }
                 }
             }).start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,7 +77,7 @@ public class Controller implements Initializable {
         for (Node text: emojiList.getChildren()) {
             text.setOnMouseClicked(event -> {
             inputMessageArea.setText(inputMessageArea.getText()+" "+((Text)text).getText());
-            //emojiList.setVisible(false);
+            emojiList.setVisible(false);
             });
         }
     }
@@ -95,8 +95,5 @@ public class Controller implements Initializable {
     @FXML
     void logout(ActionEvent e) {
         ((Stage)logoutButton.getScene().getWindow()).close();
-    }
-
-    public void login(ActionEvent actionEvent) {
     }
 }
