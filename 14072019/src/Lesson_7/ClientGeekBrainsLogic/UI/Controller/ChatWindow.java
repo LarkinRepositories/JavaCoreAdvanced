@@ -119,10 +119,9 @@ public class ChatWindow implements Initializable {
                             Label label;
                             VBox vBox = new VBox();
                             String[] tokens = str.split(" ");
-                            System.out.println(tokens[0].substring(0, tokens[0].length()-1));
                             if (tokens[0].substring(0, tokens[0].length()-1).equalsIgnoreCase(nickname)) {
                                 vBox.setAlignment(Pos.TOP_RIGHT);
-                                label = new Label(tokens[1]+"\n");
+                                label = new Label(tokens[1]+ "\n");
                             }
                             else {
                                 vBox.setAlignment(Pos.TOP_LEFT);
