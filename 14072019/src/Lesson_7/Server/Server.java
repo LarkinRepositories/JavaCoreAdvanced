@@ -53,6 +53,15 @@ public class Server {
         return AuthService.getBlacklistedUsers(client.getUserID()).contains(nickname);
     }
 
+    public boolean isBlacklisted(String nickname) throws SQLException {
+        for (ClientHandler client:clients) {
+            if (AuthService.getBlacklistedUsers(client.getUserID()).contains(nickname)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public synchronized void broadcastMessage(String message) {
         for (ClientHandler client: clients) {
             client.sendMessage(message);
