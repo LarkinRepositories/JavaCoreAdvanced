@@ -36,7 +36,6 @@ public class Login {
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
-    private boolean setAuthorized;
 
     public void connect() {
         try {
@@ -50,10 +49,10 @@ public class Login {
                             while(true) {
                                 String str = in.readUTF();
                                 if (str.startsWith("/authok")) {
-                                    setAuthorized = true;
+                                    String[] tokens = str.split(" ");
                                     Platform.runLater(() -> {
                                         try {
-                                            createMainChatWindow();
+                                            Login.this.createMainChatWindow();
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
@@ -66,8 +65,6 @@ public class Login {
                             while (true) {
                                 String str = in.readUTF();
                                 if (str.equals("/serverClosed")) {
-                                    setAuthorized = false;
-
                                 }
                             }
                         } catch (IOException e) {
@@ -84,27 +81,16 @@ public class Login {
         if (socket == null || socket.isClosed()) {
             connect();
         }
+
         String username = loginField.getText();
         String password = passwordField.getText();
         try {
             out.writeUTF("/auth "+username+" "+password);
             loginField.clear();
             passwordField.clear();
-            //createMainChatWindow();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    private void createMainChatWindow() throws IOException {
-        Stage stage = new Stage();
-        stage.initStyle(StageStyle.TRANSPARENT);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Fxml/ChatWindow.fxml"));
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.getScene().setFill(Color.TRANSPARENT);
-        //ChatWindow chatWindow = fxmlLoader.getController();
-        ((Stage) passwordField.getScene().getWindow()).close();
-        ((Stage) loginBtn.getScene().getWindow()).close();
-        stage.show();
     }
 //    private void createMainChatWindow() throws IOException {
 //        Stage stage = new Stage();
@@ -124,5 +110,39 @@ public class Login {
         }
         */
         ((Stage)closeBtn.getScene().getWindow()).close();
+    }
+    @FXML
+    private void createNew() {
+        Platform.runLater(() -> {
+            try {
+                createNewAccountWindow();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    private void createNewAccountWindow() throws IOException {
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.TRANSPARENT);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Fxml/CreateNewAccount.fxml"));
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.getScene().setFill(Color.TRANSPARENT);
+        //ChatWindow chatWindow = fxmlLoader.getController();
+        ((Stage) passwordField.getScene().getWindow()).close();
+        ((Stage) loginBtn.getScene().getWindow()).close();
+        stage.show();
+    }
+
+    private void createMainChatWindow() throws IOException {
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.TRANSPARENT);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Fxml/ChatWindow.fxml"));
+
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.getScene().setFill(Color.TRANSPARENT);
+        //ChatWindow chatWindow = fxmlLoader.getController();
+        ((Stage) passwordField.getScene().getWindow()).close();
+        ((Stage) loginBtn.getScene().getWindow()).close();
+        stage.show();
     }
 }

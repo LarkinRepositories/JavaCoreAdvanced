@@ -28,6 +28,11 @@ public class ClientHandler {
                 try {
                     while (true) {
                         String str = in.readUTF();
+                        if (str.startsWith("/new")) {
+                            String[] tokens = str.split(" ");
+                            AuthService.createNewAccount(tokens[1], tokens[2], tokens[3]);
+                            continue;
+                        }
                         if (str.startsWith("/auth")) {
                             String[] tokens = str.split(" ");
                             userID = AuthService.getUserIDByLoginAndPass(tokens[1], tokens[2]);
@@ -41,10 +46,10 @@ public class ClientHandler {
                                     server.broadcastMessage(nickname + " joined the conversation");
                                     break;
                                 }  else {
-                                    sendMessage(String.format("%s уже авторизован", nickname));
+                                    sendMessage(String.format("%s is already authorized", nickname));
                                 }
                             } else {
-                                sendMessage("Неверный логин/пароль!");
+                                sendMessage("Incorrect login/password!");
                             }
                         }
                     }
