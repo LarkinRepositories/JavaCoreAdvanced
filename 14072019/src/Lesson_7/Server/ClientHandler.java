@@ -61,6 +61,12 @@ public class ClientHandler {
                             out.writeUTF("/serverClosed");
                             break;
                         }
+                        if(message.startsWith("/changeNick")) {
+                            String[] tokens = message.split(" ");
+                            String nickname = tokens[1];
+                            AuthService.changeNickname(this.userID, nickname);
+                        }
+
                         if (message.startsWith("/w ")){
                             String[] tokens = message.split(" ");
                             String nickname = tokens[1];
