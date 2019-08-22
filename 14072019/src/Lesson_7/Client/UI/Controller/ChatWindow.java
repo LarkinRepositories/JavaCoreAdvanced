@@ -28,7 +28,7 @@ public class ChatWindow implements Initializable {
     private final String IP_ADDRESS = "localhost";
     private final int PORT = 8189;
     private boolean isAuthorized;
-    private static String nickname;
+    private String nickname = "nickname";
 
     @FXML
     private TextArea inputMessageArea;
@@ -47,33 +47,36 @@ public class ChatWindow implements Initializable {
             socket = new Socket(IP_ADDRESS, PORT);
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
-                        while (true) {
-                            String str = in.readUTF();
-                            //messageArea.appendText(str +"\n");
-                            //Label label = new Label(str + "\n");
-                            Label label;
-                            VBox vBox = new VBox();
-                            String[] tokens = str.split(" ");
-                            if (tokens[0].substring(0, tokens[0].length()-1).equalsIgnoreCase(nickname)) {
-                                vBox.setAlignment(Pos.TOP_RIGHT);
-                                label = new Label(tokens[1]+ "\n");
-                            }
-                            else {
-                                vBox.setAlignment(Pos.TOP_LEFT);
-                                label = new Label(str + "\n");
-                            }
-                            vBox.getChildren().add(label);
-                            Platform.runLater(() -> chatBox.getChildren().add(vBox));
-                            if (str.equals("/serverClosed")) {
-                                //setAuthorized(false);
-                            }
-                        }
+//                        while (true) {
+//                            String str = in.readUTF();
+//                            //messageArea.appendText(str +"\n");
+//                            //Label label = new Label(str + "\n");
+//                            Label label;
+//                            VBox vBox = new VBox();
+//                            String[] tokens = str.split(" ");
+//                            if (tokens[0].substring(0, tokens[0].length()-1).equalsIgnoreCase(nickname)) {
+//                                vBox.setAlignment(Pos.TOP_RIGHT);
+//                                label = new Label(tokens[1]+ "\n");
+//                            }
+//                            else {
+//                                vBox.setAlignment(Pos.TOP_LEFT);
+//                                label = new Label(str + "\n");
+//                            }
+//                            vBox.getChildren().add(label);
+//                            Platform.runLater(() -> chatBox.getChildren().add(vBox));
+//                            if (str.equals("/serverClosed")) {
+//                                //setAuthorized(false);
+//                            }
+//                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
-
+    public synchronized void setNickname(String nickname) {
+        this.nickname = nickname;
+        System.out.println(this.nickname);
+    }
 
     @FXML
     void emojiAction(ActionEvent event) {
@@ -84,9 +87,18 @@ public class ChatWindow implements Initializable {
             emojiList.setVisible(true);
         }
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println(nickname);
         connect();
+//        try {
+//            String str = in.readUTF();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
         for (Node text: emojiList.getChildren()) {
             text.setOnMouseClicked(event -> {
             inputMessageArea.setText(inputMessageArea.getText()+" "+((Text)text).getText());
@@ -94,6 +106,7 @@ public class ChatWindow implements Initializable {
             });
         }
     }
+
     @FXML
     void sendMsg(ActionEvent e) {
         //messageArea.appendText(inputMessageArea.getText()+"\n");

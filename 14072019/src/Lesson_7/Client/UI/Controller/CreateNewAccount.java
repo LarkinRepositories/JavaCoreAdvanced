@@ -37,8 +37,6 @@ public class CreateNewAccount {
     private DataOutputStream out;
 
 
-
-
     @FXML
     private void createNew() {
         if (socket == null || socket.isClosed()) {

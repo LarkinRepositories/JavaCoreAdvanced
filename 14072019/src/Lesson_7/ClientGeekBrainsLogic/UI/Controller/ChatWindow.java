@@ -116,6 +116,10 @@ public class ChatWindow implements Initializable {
                             String str = in.readUTF();
                             //messageArea.appendText(str +"\n");
                             //Label label = new Label(str + "\n");
+                            if(str.startsWith("/nickChanged")) {
+                                String[] tokens = str.split(" ");
+                                nickname = tokens[1];
+                            }
                             Label label;
                             VBox vBox = new VBox();
                             String[] tokens = str.split(" ");

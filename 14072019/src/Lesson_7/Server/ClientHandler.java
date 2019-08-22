@@ -33,6 +33,7 @@ public class ClientHandler {
                             AuthService.createNewAccount(tokens[1], tokens[2], tokens[3]);
                             continue;
                         }
+
                         if (str.startsWith("/auth")) {
                             String[] tokens = str.split(" ");
                             userID = AuthService.getUserIDByLoginAndPass(tokens[1], tokens[2]);
@@ -61,10 +62,13 @@ public class ClientHandler {
                             out.writeUTF("/serverClosed");
                             break;
                         }
-                        if(message.startsWith("/changeNick")) {
+                        if(message.startsWith("/changeNick ")) {
                             String[] tokens = message.split(" ");
                             String nickname = tokens[1];
                             AuthService.changeNickname(this.userID, nickname);
+                            this.nickname = nickname;
+                            sendMessage("/nickChanged "+nickname);
+                            continue;
                         }
 
                         if (message.startsWith("/w ")){

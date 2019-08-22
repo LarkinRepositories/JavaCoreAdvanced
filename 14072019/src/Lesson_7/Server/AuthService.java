@@ -25,7 +25,7 @@ public class AuthService {
 
     public static void createNewAccount(String login, String nickname, String password) throws SQLException {
         String query = String.format("INSERT INTO users (login, password, nickname) VALUES ('%s', '%s', '%s')", login, password.hashCode(), nickname);
-        statement.executeQuery(query);
+        statement.executeUpdate(query);
     }
 
     public static int getUserIDByLoginAndPass(String login, String password) throws SQLException {

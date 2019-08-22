@@ -36,6 +36,7 @@ public class Login {
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
+    private String nickname;
 
     public void connect() {
         try {
@@ -45,31 +46,32 @@ public class Login {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                        try {
-                            while(true) {
-                                String str = in.readUTF();
-                                if (str.startsWith("/authok")) {
-                                    String[] tokens = str.split(" ");
-                                    Platform.runLater(() -> {
-                                        try {
-                                            Login.this.createMainChatWindow();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    });
-                                    break;
-                                } else {
-                                    authFailedText.setVisible(true);
-                                }
+                    try {
+                        while(true) {
+                            String str = in.readUTF();
+                            if (str.startsWith("/authok")) {
+                                String[] tokens = str.split(" ");
+                                nickname = tokens[1];
+                                Platform.runLater(() -> {
+                                    try {
+                                        createMainChatWindow();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
+                                break;
+                            } else {
+                                authFailedText.setVisible(true);
                             }
-                            while (true) {
-                                String str = in.readUTF();
-                                if (str.equals("/serverClosed")) {
-                                }
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
+                        while (true) {
+                            String str = in.readUTF();
+                            if (str.equals("/serverClosed")) {
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }).start();
         } catch (IOException e) {
@@ -92,13 +94,6 @@ public class Login {
             e.printStackTrace();
         }
     }
-//    private void createMainChatWindow() throws IOException {
-//        Stage stage = new Stage();
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ChatWindow.fxml"));
-//        stage.setScene(new Scene(loader.load()));
-//        stage.show();
-//
-//    }
 
     @FXML
     public void closeWindow() {
@@ -127,22 +122,21 @@ public class Login {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Fxml/CreateNewAccount.fxml"));
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.getScene().setFill(Color.TRANSPARENT);
-        //ChatWindow chatWindow = fxmlLoader.getController();
         ((Stage) passwordField.getScene().getWindow()).close();
         ((Stage) loginBtn.getScene().getWindow()).close();
         stage.show();
     }
 
     private void createMainChatWindow() throws IOException {
-        Stage stage = new Stage();
-        stage.initStyle(StageStyle.TRANSPARENT);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Fxml/ChatWindow.fxml"));
-
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.getScene().setFill(Color.TRANSPARENT);
-        //ChatWindow chatWindow = fxmlLoader.getController();
-        ((Stage) passwordField.getScene().getWindow()).close();
-        ((Stage) loginBtn.getScene().getWindow()).close();
-        stage.show();
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.TRANSPARENT);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Fxml/ChatWindow.fxml"));
+            stage.setScene(new Scene(fxmlLoader.load()));
+            ChatWindow chatController = fxmlLoader.getController();
+            chatController.setNickname(nickname);
+            stage.getScene().setFill(Color.TRANSPARENT);
+            ((Stage) passwordField.getScene().getWindow()).close();
+            ((Stage) loginBtn.getScene().getWindow()).close();
+            stage.show();
     }
 }
