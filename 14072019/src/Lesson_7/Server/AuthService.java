@@ -41,6 +41,11 @@ public class AuthService {
         statement.executeUpdate(query);
     }
 
+    public static void changeNickname(int userID, String nickname) throws SQLException {
+        String query = String.format("UPDATE users SET nickname='%s' WHERE id=%s", nickname, userID );
+        statement.executeUpdate(query);
+    }
+
     public static void blacklist(int userID, String nickname) throws SQLException {
         String query = String.format("INSERT into blacklist VALUES(%s, '%s')", userID, nickname);
         statement.executeUpdate(query);
