@@ -77,7 +77,7 @@ public class Server {
                     return;
                 }
             }
-            donor.sendMessage(String.format("Ther're no user with %s nickname in chat", acceptor));
+            donor.sendMessage(String.format("There're no user with %s nickname in chat", acceptor));
         } else {
             donor.sendMessage(String.format("%s is blacklisted!", acceptor));
         }

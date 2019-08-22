@@ -16,7 +16,7 @@
                <children>
                   <TextField fx:id="loginField" layoutX="186.0" layoutY="111.0" prefHeight="26.0" prefWidth="227.0" promptText="login" />
                   <Button fx:id="loginBtn" layoutX="306.0" layoutY="215.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" text="Sign in" onAction="#login" />
-                  <Text fx:id="createText" fill="#240075" layoutX="187.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create new account" />
+                  <Text fx:id="createText" fill="#240075" layoutX="187.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create new account" onMouseClicked="#createNew"/>
                   <PasswordField id="passwordField" fx:id="passwordField" layoutX="186.0" layoutY="160.0" prefHeight="25.0" prefWidth="227.0" promptText="password" />
                   <Text fx:id="authFailedText" visible="false" fill="#f50000" layoutX="281.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect login/password" />
                </children>
